@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arthur Silva Santos — Portfólio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0c0e;
+    --surface: #13151a;
+    --border: #1e2028;
+    --accent: #c8f135;
+    --accent2: #3af0c0;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(11,12,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    right: -10vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60vw;
+    height: 60vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,241,53,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,0,0,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-left {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    border: 1px solid rgba(200,241,53,0.3);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #9ca3af;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border: 1px solid var(--accent);
+    font-weight: 400;
+  }
+  .btn-primary:hover { background: #d8ff40; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(200,241,53,0.25); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--muted); transform: translateY(-1px); }
+
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 280px;
+    position: relative;
+  }
+
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 2rem; right: 2rem;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+  }
+
+  .hero-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-stat:last-child { border-bottom: none; }
+
+  .stat-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .stat-dot.blue { background: var(--accent2); }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .stat-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 1rem;
+  }
+
+  /* ── SOBRE ── */
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .sobre-text p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: #cdd1db;
+    margin-bottom: 1.25rem;
+  }
+
+  .sobre-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  .sobre-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .info-row:first-child { border-radius: 8px 8px 0 0; }
+  .info-row:last-child { border-radius: 0 0 8px 8px; }
+
+  .info-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .info-val {
+    font-size: 0.85rem;
+    color: var(--text);
+    text-align: right;
+  }
+
+  /* ── FORMAÇÃO ── */
+  .formacao-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .card:hover {
+    border-color: rgba(200,241,53,0.25);
+    transform: translateY(-3px);
+  }
+
+  .card-accent-line {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    border-radius: 10px 0 0 10px;
+  }
+  .card-accent-line.teal { background: linear-gradient(to bottom, var(--accent2), transparent); }
+
+  .card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+
+  .card-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── EXPERIÊNCIA ── */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: 173px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    padding-top: 0.2rem;
+    line-height: 1.5;
+  }
+
+  .exp-content {}
+
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-company {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 0.15em;
+  }
+
+  /* ── COMPETÊNCIAS ── */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .comp-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s;
+  }
+
+  .comp-item:hover {
+    border-color: rgba(200,241,53,0.3);
+    background: rgba(200,241,53,0.03);
+  }
+
+  .comp-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .comp-label {
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+
+  /* ── CONTATO ── */
+  .contato-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contato-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 20%; right: 20%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+  }
+
+  .contato-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .contato-sub {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contato-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+
+  .contact-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .formacao-grid { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .exp-item::before { display: none; }
+    .contato-wrapper { padding: 2.5rem 1.5rem; }
+    .contato-title { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Arthur.dev</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#formacao">Formação</a></li>
+    <li><a href="#experiencia">Experiência</a></li>
+    <li><a href="#competencias">Competências</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-circle"></div>
+
+  <div class="hero-left">
+    <span class="hero-tag">Disponível para oportunidades</span>
+    <h1 class="hero-name">Arthur<span>Silva Santos</span></h1>
+    <p class="hero-role">Estudante de Sistemas de Informação · UFOP</p>
+    <p class="hero-desc">Focado em tecnologia, suporte e atendimento ao cliente. Combino base técnica em TI com experiência prática em vendas, organização financeira e liderança militar.</p>
+    <div class="hero-cta">
+      <a href="mailto:arthursantos152005@gmail.com" class="btn btn-primary">✉ Entrar em contato</a>
+      <a href="https://linkedin.com/in/arthur-silva-santos-409846264" target="_blank" class="btn btn-ghost">LinkedIn →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <p class="hero-card-label">// perfil.json</p>
+      <div class="hero-stat">
+        <div class="stat-dot"></div>
+        <span class="stat-label">Curso</span>
+        <span class="stat-val">Sistemas de Info.</span>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-dot blue"></div>
+        <span class="stat-label">Semestre</span>
+        <span class="stat-val">4º</span>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-dot"></div>
+        <span class="stat-label">Localização</span>
+        <span class="stat-val">Curvelo – MG</span>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-dot blue"></div>
+        <span class="stat-label">Formação militar</span>
+        <span class="stat-val">NPOR ✓</span>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-dot"></div>
+        <span class="stat-label">Trabalho remoto</span>
+        <span class="stat-val">Sim</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Sobre mim</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="sobre-grid">
+    <div class="sobre-text">
+      <p>Sou estudante de Sistemas de Informação na Universidade Federal de Ouro Preto (UFOP), atualmente no 4º semestre. Tenho facilidade com tecnologia e foco em resolver problemas de forma prática e eficiente.</p>
+      <p>Minha trajetória combina formação técnica com experiências reais: atuei com vendas e suporte ao cliente no setor aéreo (trabalho remoto) e com rotinas administrativas e financeiras na Gear Refrigerações por mais de quatro anos.</p>
+      <p>Pela formação militar no NPOR, desenvolvi disciplina, liderança e a capacidade de trabalhar bem sob pressão — habilidades que aplico diariamente na vida acadêmica e profissional.</p>
+      <div class="sobre-tags">
+        <span class="tag">Tecnologia</span>
+        <span class="tag">Suporte</span>
+        <span class="tag">Atendimento</span>
+        <span class="tag">Vendas</span>
+        <span class="tag">Liderança</span>
+        <span class="tag">Trabalho remoto</span>
+        <span class="tag">Office</span>
+        <span class="tag">Aprendizado rápido</span>
+      </div>
+    </div>
+
+    <div class="sobre-info">
+      <div class="info-row">
+        <span class="info-key">Nome</span>
+        <span class="info-val">Arthur Silva Santos</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Localização</span>
+        <span class="info-val">Curvelo – MG, Brasil</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Telefone</span>
+        <span class="info-val">(38) 99921-2852</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">E-mail</span>
+        <span class="info-val">arthursantos152005@gmail.com</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">LinkedIn</span>
+        <span class="info-val">arthur-silva-santos-409846264</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Disponibilidade</span>
+        <span class="info-val">Imediata</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAÇÃO -->
+<section id="formacao" style="background: rgba(19,21,26,0.5); max-width: 100%; padding: 6rem 0;">
+  <div style="max-width: 1100px; margin: 0 auto; padding: 0 3rem;">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Formação</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="formacao-grid">
+      <div class="card">
+        <div class="card-accent-line"></div>
+        <div class="card-icon">🎓</div>
+        <div class="card-title">Sistemas de Informação</div>
+        <div class="card-sub">UFOP · 4º Semestre · Em andamento</div>
+        <p class="card-desc">Bacharelado na Universidade Federal de Ouro Preto, com foco em desenvolvimento de software, redes, banco de dados e sistemas computacionais.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-accent-line teal"></div>
+        <div class="card-icon">🪖</div>
+        <div class="card-title">Formação Militar — NPOR</div>
+        <div class="card-sub">Núcleo de Preparação de Oficiais da Reserva</div>
+        <p class="card-desc">Desenvolvimento de disciplina, liderança, responsabilidade e capacidade de atuar sob pressão. Formação que complementa a postura profissional em qualquer ambiente de trabalho.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-accent-line"></div>
+        <div class="card-icon">📘</div>
+        <div class="card-title">Ensino Médio</div>
+        <div class="card-sub">Interventor Alcides Lins · Concluído em 2023</div>
+        <p class="card-desc">Conclusão do ensino médio com aprovação no vestibular da UFOP, ingressando em Sistemas de Informação no mesmo ano.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-accent-line teal"></div>
+        <div class="card-icon">💡</div>
+        <div class="card-title">Aprendizado Contínuo</div>
+        <div class="card-sub">Tecnologia · Programação · Produtividade</div>
+        <p class="card-desc">Estudo autônomo em programação, suporte técnico, hardware e ferramentas de produtividade, sempre buscando ampliar o repertório técnico e profissional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experiência</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-period">Recente<br/>Trabalho remoto</div>
+      <div class="exp-content">
+        <div class="exp-role">Vendas de Passagens Aéreas</div>
+        <div class="exp-company">// SETOR AÉREO · REMOTO</div>
+        <ul class="exp-bullets">
+          <li>Atendimento e suporte ao cliente de forma 100% online</li>
+          <li>Venda e emissão de passagens aéreas com metas de conversão</li>
+          <li>Auxílio em remarcações, cancelamentos e resolução de problemas</li>
+          <li>Organização de informações comerciais e comunicação direta com clientes</li>
+          <li>Experiência com negociação e relacionamento com clientes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-period">Mar 2019 –<br/>Out 2023</div>
+      <div class="exp-content">
+        <div class="exp-role">Office Boy / Aux. Administrativo</div>
+        <div class="exp-company">// GEAR REFRIGERAÇÕES</div>
+        <ul class="exp-bullets">
+          <li>Apoio em rotinas administrativas e operacionais da empresa</li>
+          <li>Controle de contas a pagar e a receber</li>
+          <li>Organização financeira e manuseio de valores</li>
+          <li>Suporte interno às atividades da equipe por mais de 4 anos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETÊNCIAS -->
+<section id="competencias" style="background: rgba(19,21,26,0.5); max-width: 100%; padding: 6rem 0;">
+  <div style="max-width: 1100px; margin: 0 auto; padding: 0 3rem;">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Competências</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="comp-grid">
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Atendimento ao cliente</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Vendas e negociação</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Comunicação eficaz</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Trabalho em equipe</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Disciplina e responsabilidade</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Facilidade com tecnologia</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Pacote Office (Word, Excel, PPT)</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Organização financeira</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Trabalho remoto</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Aprendizado rápido</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Adaptabilidade</span></div>
+      <div class="comp-item"><div class="comp-dot"></div><span class="comp-label">Liderança (NPOR)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="contato-wrapper">
+    <h2 class="contato-title">Vamos conversar?</h2>
+    <p class="contato-sub">Aberto a oportunidades em tecnologia, suporte, atendimento ou comercial.</p>
+    <div class="contato-links">
+      <a href="mailto:arthursantos152005@gmail.com" class="contact-chip">✉ arthursantos152005@gmail.com</a>
+      <a href="tel:+5538999212852" class="contact-chip">📞 (38) 99921-2852</a>
+      <a href="https://linkedin.com/in/arthur-silva-santos-409846264" target="_blank" class="contact-chip">💼 LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Arthur Silva Santos · Curvelo, MG · Sistemas de Informação – UFOP
+</footer>
+
+</body>
+</html>
